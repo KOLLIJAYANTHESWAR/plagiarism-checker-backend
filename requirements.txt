@@ -9,4 +9,3 @@ pandas
 requests
 numpy
 git+https://github.com/PrithivirajDamodaran/Parrot_Paraphraser.git
-tavily
