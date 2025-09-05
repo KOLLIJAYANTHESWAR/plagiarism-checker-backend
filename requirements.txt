@@ -1,0 +1,12 @@
+flask
+flask-cors
+sentence-transformers
+scikit-learn
+transformers
+torch
+python-dotenv
+pandas
+requests
+numpy
+git+https://github.com/PrithivirajDamodaran/Parrot_Paraphraser.git
+tavily

@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.egg-info/
+*.egg
+
+# Virtual environment
+venv/
+.env
+.env.*
+
+# IDEs / Editors
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Node / JS (for frontend-related if any)
+node_modules/
+package-lock.json
+npm-debug.log
+
+# Git submodule / external repo
+Parrot_Paraphraser/
+
+# Python caches
+*.log
