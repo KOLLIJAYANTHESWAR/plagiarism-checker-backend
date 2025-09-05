@@ -9,4 +9,5 @@ python-dotenv
 pandas
 requests
 numpy
+protobuf>=4.23.3
 git+https://github.com/PrithivirajDamodaran/Parrot_Paraphraser.git
