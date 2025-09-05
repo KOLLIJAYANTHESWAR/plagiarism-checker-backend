@@ -8,7 +8,8 @@ import requests
 from parrot.parrot import Parrot
 import warnings
 import traceback
-from tavily import TavilyClient
+import requests
+
 
 
 warnings.filterwarnings("ignore")
@@ -271,7 +272,8 @@ def deplagiarize():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"Failed to de-plagiarize: {str(e)}"}), 500
-    
+
+
 @app.route('/check_article', methods=['POST'])
 def check_article():
     try:
@@ -284,15 +286,18 @@ def check_article():
         if not tavily_api_key:
             return jsonify({"error": "Tavily API key is required"}), 400
 
-        # Initialize Tavily client
-        client = TavilyClient(api_key=tavily_api_key)
+        # Call Tavily API via HTTP instead of Python module
+        headers = {"Authorization": f"Bearer {tavily_api_key}"}
+        payload = {"query": article_text, "num_results": 5}
 
-        # Search for similar articles
-        results = client.search(query=article_text, num_results=5).get("results", [])
+        response = requests.post("https://api.tavily.com/search", json=payload, headers=headers)
+        response.raise_for_status()  # Raise error if request failed
+
+        results = response.json().get("results", [])
 
         formatted_results = []
         for item in results:
-            snippet = item.get("content", "").strip()  # matched content/snippet
+            snippet = item.get("content", "").strip()
             similarity = get_semantic_similarity(article_text, snippet) if snippet else 0
 
             formatted_results.append({
@@ -310,6 +315,7 @@ def check_article():
     except Exception as e:
         traceback.print_exc()
         return jsonify({"error": f"Failed to check article: {str(e)}"}), 500
+
 
 # -------------------- Run Flask App --------------------
 
