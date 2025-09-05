@@ -1,33 +1,15 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.sqlite3
-*.egg-info/
-*.egg
-
-# Virtual environment
+# Python virtual environment
 venv/
-.env
-.env.*
 
-# IDEs / Editors
-.vscode/
-.idea/
-*.swp
+# Python cache
+__pycache__/
 
-# OS files
-.DS_Store
-Thumbs.db
-
-# Node / JS (for frontend-related if any)
+# Node modules (if you have frontend)
 node_modules/
-package-lock.json
-npm-debug.log
 
-# Git submodule / external repo
+# IDE/editor files
+*.vscode/
+*.idea/
+
+# Optional: ignore Parrot_Paraphraser if you don’t want it as submodule
 Parrot_Paraphraser/
-
-# Python caches
-*.log
