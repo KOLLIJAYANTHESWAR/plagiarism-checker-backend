@@ -1,258 +1,291 @@
-# 🔍 Advanced Plagiarism Detection Suite
+# 🔍 Advanced Plagiarism Detection Suite – Backend
 
-<div align="center">
+An AI-powered plagiarism detection backend built using **Flask, Sentence Transformers, Scikit-learn, and OpenRouter API**.
 
-![Plagiarism Checker](https://img.shields.io/badge/AI-Plagiarism%20Detection-blue?style=for-the-badge&logo=search&logoColor=white)
-![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js&logoColor=white)
-![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)
-
-### 🚀 AI-Powered Multi-Modal Plagiarism Detection Platform
-
-Semantic text analysis • GitHub code similarity • Web article matching • Intelligent paraphrasing
-
-</div>
+This backend provides semantic similarity scoring, GitHub code comparison, article-level plagiarism detection, report generation, and AI-based paraphrasing.
 
 ---
 
 ## 📌 Project Overview
 
-The **Advanced Plagiarism Detection Suite** is a modern AI-integrated platform designed to detect plagiarism across multiple content types using intelligent similarity analysis and real-time API integrations.
+The backend engine powers a multi-modal plagiarism detection platform capable of:
 
-The system focuses on:
+- Semantic similarity analysis using transformer embeddings
+- Lexical and structural similarity scoring
+- GitHub repository-based code plagiarism detection
+- Web-scale article matching using Tavily API
+- AI-powered text & code paraphrasing
+- Detailed plagiarism report generation
 
-- Semantic text similarity detection
-- GitHub repository-based code comparison
-- Web-scale article plagiarism analysis
-- AI-powered paraphrasing
-- Real-time interactive UI feedback
-- Secure client-side API integration
-
-Built using the **Next.js 15 App Router architecture** with TypeScript and a scalable component system.
+This system is designed for integration with a modern frontend (Next.js / React) or any external client via REST APIs.
 
 ---
 
-## 🏗️ System Architecture
+## 🏗️ Backend Architecture
 
 ```
-User
-  ↓
-Next.js Frontend (App Router)
-  ↓
-API Integration Layer
-  ↓
-OpenRouter  |  GitHub API  |  Tavily API
-  ↓
-AI & Web Analysis Engines
-  ↓
-Structured Similarity Reports
+Client (Frontend / API Consumer)
+        ↓
+Flask REST API
+        ↓
+Similarity Engine
+        ↓
+SentenceTransformer Model (all-MiniLM-L6-v2)
+        ↓
+Cosine Similarity + Lexical + Structural Analysis
+        ↓
+External APIs:
+   - GitHub API
+   - Tavily API
+   - OpenRouter API
+        ↓
+Structured JSON Response
 ```
 
 ---
 
-## 🌟 Core Features
+## 🚀 Core Features
 
-### 🔍 Text Plagiarism Detection
-- AI-powered semantic similarity scoring
-- Confidence-based result metrics
-- Matched content highlighting
-- Real-time character validation
+### 🔍 Multi-Layer Similarity Scoring
 
----
+The backend computes:
 
-### 💻 Code Plagiarism Scanner
-- GitHub repository scanning
-- Intelligent code comparison logic
-- Repository reference linking
-- Similarity confidence scoring
+- **Semantic Similarity** (Transformer embeddings + cosine similarity)
+- **Lexical Similarity** (Word overlap ratio)
+- **Structural Similarity** (Code structure analysis)
+- **Final Weighted Plagiarism Score**
 
----
+Scoring Logic:
 
-### 📄 Article Plagiarism Analysis
-- Tavily-powered web search matching
-- Large content handling (up to 10,000 words)
-- Source-based comparison
-- Web content confidence indicators
+```
+Code:
+0.4 * Semantic + 0.3 * Lexical + 0.3 * Structural
+
+Text:
+0.6 * Semantic + 0.4 * Lexical
+```
 
 ---
 
-### 🔄 AI Paraphrasing Engine
-- OpenRouter model integration
-- Intelligent rewriting system
-- Clean formatted output
-- Side-by-side comparison view
+### 💻 GitHub Code Plagiarism Detection
+
+- Extracts function names from input code
+- Queries GitHub Code Search API
+- Fetches raw file content
+- Extracts relevant function block
+- Computes similarity score
+- Returns best matching repository with confidence score
 
 ---
 
-## 🎨 User Experience
+### 📄 Article Plagiarism Detection
 
-- 🌙 Dark / Light theme toggle
-- 📱 Fully responsive layout
-- ⚡ Real-time validation & feedback
-- 📊 Interactive similarity indicators
-- 🔐 Local API key management via settings panel
-- 🎯 Clean modular component architecture
+- Uses Tavily Search API
+- Searches for related web content
+- Compares semantic similarity
+- Returns matched snippets with similarity score
+
+---
+
+### 🔄 AI De-Plagiarization Engine
+
+Supports two modes:
+
+**Text Mode**
+- Uses Parrot (T5-based paraphraser)
+
+**Code Mode**
+- Uses OpenRouter API (Mistral-7B-Instruct)
+- Extracts rewritten code block
+- Preserves functionality while modifying structure
+
+---
+
+### 📊 Detailed Report Generation
+
+Endpoint returns:
+
+- Semantic similarity
+- Lexical similarity
+- Structural similarity
+- Final score
+- Status (Original / Plagiarised)
+- Highlighted matching words (HTML mark tags)
 
 ---
 
 ## 🛠️ Tech Stack
 
-### Frontend
-- Next.js 15 (App Router)
-- React 18
-- TypeScript 5
-- Tailwind CSS
-- Shadcn/UI
+### Backend Framework
+- Flask
+- Flask-CORS
 
-### AI & API Integrations
-- OpenRouter (AI text analysis & paraphrasing)
-- GitHub REST API (code scanning)
-- Tavily API (web search intelligence)
+### AI & NLP
+- SentenceTransformers (all-MiniLM-L6-v2)
+- Scikit-learn (Cosine Similarity)
+- Parrot Paraphraser (T5 Model)
 
-### Tooling
-- ESLint
-- TypeScript strict mode
-- PostCSS
-- Tailwind configuration
-- Modular component architecture
+### External APIs
+- GitHub REST API
+- Tavily API
+- OpenRouter API
+
+### Utilities
+- NumPy
+- Regex processing
+- Requests library
 
 ---
 
 ## 📦 Project Structure
 
 ```
-plagiarism-checker-frontend/
+backend/
 │
-├── app/                    # Next.js App Router
-│   ├── layout.tsx
-│   ├── page.tsx
-│   └── globals.css
-│
-├── components/
-│   ├── ui/                 # Shadcn/UI components
-│   ├── theme-provider.tsx
-│   ├── use-toast.ts
-│   └── custom modules
-│
-├── public/
-├── package.json
-├── next.config.mjs
-├── tailwind.config.ts
-├── tsconfig.json
+├── app.py              # Main Flask application
+├── generate.py         # Auxiliary generation utilities
+├── requirements.txt    # Python dependencies
+├── LICENSE
 └── README.md
 ```
 
 ---
 
-## ⚙️ API Configuration
+## 📡 API Endpoints
 
-The platform requires external API keys for full functionality.
+### `GET /`
+Health check endpoint.
 
-### Required Services
+---
 
-| Service     | Purpose |
-|-------------|----------|
-| OpenRouter  | AI text similarity & paraphrasing |
-| GitHub API  | Code repository scanning |
-| Tavily API  | Web article search & matching |
+### `POST /check_plagiarism`
 
-You can configure keys via:
-
-- Settings Panel (Recommended)
-- `.env.local` (Development only)
-
-Example:
-
+Request:
+```json
+{
+  "input_code": "...",
+  "fetched_code": "...",
+  "is_code": true
+}
 ```
-NEXT_PUBLIC_OPENROUTER_API_KEY=your_key
-NEXT_PUBLIC_GITHUB_TOKEN=your_token
-NEXT_PUBLIC_TAVILY_API_KEY=your_key
+
+Response:
+```json
+{
+  "semantic_similarity": 78.4,
+  "lexical_similarity": 65.2,
+  "structural_similarity": 80.1,
+  "final_plagiarism_score": 74.9,
+  "status": "Plagiarised"
+}
 ```
 
 ---
 
-## 🚀 Running Locally
+### `POST /search_github_code`
+
+Searches GitHub repositories for similar code.
+
+Required:
+- `input_code`
+- `github_token`
+
+---
+
+### `POST /generate_report`
+
+Generates a detailed plagiarism comparison report.
+
+---
+
+### `POST /deplagiarize`
+
+Modes:
+- `text`
+- `code`
+
+Requires:
+- `openrouter_api_key` (for code mode)
+
+---
+
+### `POST /check_article`
+
+Requires:
+- `article_text`
+- `tavily_api_key`
+
+Returns matched web sources with similarity scores.
+
+---
+
+## ⚙️ Running Locally
 
 ### 1️⃣ Clone Repository
 
 ```bash
-git clone https://github.com/your-username/plagiarism-checker-frontend.git
-cd plagiarism-checker-frontend
+git clone https://github.com/your-username/plagiarism-backend.git
+cd plagiarism-backend
 ```
 
-### 2️⃣ Install Dependencies
+### 2️⃣ Create Virtual Environment
 
 ```bash
-npm install
+python -m venv venv
+source venv/bin/activate  # Mac/Linux
+venv\Scripts\activate     # Windows
 ```
 
-### 3️⃣ Start Development Server
+### 3️⃣ Install Dependencies
 
 ```bash
-npm run dev
+pip install -r requirements.txt
 ```
 
-Application runs at:
-
-```
-http://localhost:3000
-```
-
----
-
-## 🔧 Available Scripts
+### 4️⃣ Run Server
 
 ```bash
-npm run dev
-npm run build
-npm run start
-npm run lint
-npm run type-check
+python app.py
+```
+
+Server runs at:
+
+```
+http://127.0.0.1:5000
 ```
 
 ---
 
 ## 🔐 Security Notes
 
-- API keys stored locally (development mode only)
-- Input validation before API calls
-- Error boundary handling
-- No hardcoded secrets
-- Production deployment should use a backend proxy
+- No API keys stored server-side
+- API keys passed per request
+- Input validation for all endpoints
+- Error handling with traceback logging
+- CORS enabled for frontend integration
 
 ---
 
 ## 🎯 Engineering Highlights
 
-✔ Multi-modal plagiarism detection  
-✔ Semantic AI similarity scoring  
-✔ GitHub code scanning integration  
-✔ Web content intelligence via Tavily  
-✔ Modular scalable UI architecture  
-✔ Type-safe TypeScript implementation  
-✔ Production-ready Next.js structure  
+✔ Transformer-based semantic similarity  
+✔ Multi-layer plagiarism scoring system  
+✔ GitHub code intelligence integration  
+✔ Web article matching engine  
+✔ AI-based paraphrasing system  
+✔ Structured REST API architecture  
+✔ Clean separation of scoring logic  
 
 ---
 
-## 📈 Future Enhancements
+## 📈 Future Improvements
 
-- Backend proxy server for secure API calls
-- User authentication & dashboard
-- Exportable plagiarism reports (PDF)
-- Persistent report history
-- AI model comparison mode
-- Cloud deployment (Vercel / AWS)
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository  
-2. Create feature branch  
-3. Commit changes  
-4. Push to branch  
-5. Open Pull Request  
+- Rate limiting & API protection
+- JWT-based authentication
+- Docker containerization
+- GPU acceleration for embeddings
+- Persistent result storage
+- Model fine-tuning for code similarity
 
 ---
 
@@ -266,5 +299,5 @@ MIT License — Free for learning and portfolio use.
 
 **Kolli Jayanth Eswar**
 
-Full-Stack & AI Systems Developer  
-Next.js | TypeScript | AI Integration | Modern Web Systems
+AI Systems & Backend Developer  
+Flask | NLP | Transformer Models | API Engineering
